@@ -1,0 +1,25 @@
+;macro /macros/brush.g  Brush the head on a fixed brush
+; adapted from https://reprap.org/wiki/RepRap_Firmware_macros#Useful_user_macros
+
+M564 S0				; can go outside the limits defined in M665
+G90					; absolute positioning
+G0 Z15 F600			; raise Z height to slightly above brush -- EDIT THIS VALUE
+G0 X0 Y10 F10000 	; move head to right above brush
+G91					; relative positioning
+G1 Z-3				; lower head to brush
+G1 X20 Y15 F2000 	; where 20x15 is the dimension of the brush
+G1 X-20 Y-15 F2000
+G1 X20 Y15 F2000
+G1 X-20 Y-15 F2000
+G1 X20 Y15 F2000
+G1 X-20 Y-15 F2000
+G1 X20 Y15 F2000
+G1 X-20 Y-15 F2000
+G1 X20 Y15 F2000
+G1 X-20 Y-15 F2000
+G1 X20 Y15 F2000
+G1 Z3 F600			; raise Z above brush again
+G90					; absolute positioning
+M564 S1				; set again the safe area limits
+G0 X0 Y0 F10000		; back to origin
+G0 Z20 F600			; Z prepped
