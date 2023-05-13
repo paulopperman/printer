@@ -11,11 +11,20 @@ M550 P"Duet 3"                                 ; set printer name
 M669 K1                                        ; select CoreXY mode
 
 ; Drives
-M569 P3.0 S0                                   ; physical drive 3.0 goes backwards
-M569 P3.1 S0                                   ; physical drive 3.1 goes backwards
-M569 P0.0 S1                                   ; physical drive 0.0 goes forwards
-M569 P3.2 S1                                   ; physical drive 3.2 goes forwards
-M584 X3.0 Y3.1 Z0.0 E3.2                       ; set drive mapping
+M569 P3.0 S0                                   ; X physical drive 3.0 goes backwards
+M569 P3.1 S0                                   ; Y physical drive 3.1 goes backwards
+; Z drives
+M569 P0.0 S1              ;need to account for the 6 z motors        ; Z physical drive 0.0 goes forwards
+M569 P0.1 S1
+M569 P0.2 S1
+M569 P0.3 S1
+M569 P0.4 S1
+M569 P0.5 S1
+
+;Extruder drive
+M569 P3.2 S1                                   ; Extruder physical drive 3.2 goes forwards
+
+M584 X3.0 Y3.1 Z0.0:0.1:0.2:0.3:0.4:0.5 E3.2  ; need to acccount for the 6 z motors      ; set drive mapping
 M350 X16 Y16 Z16 E16 I1                        ; configure microstepping with interpolation
 M92 X80.00 Y80.00 Z400.00 E420.00              ; set steps per mm
 M566 X900.00 Y900.00 Z60.00 E120.00            ; set maximum instantaneous speed changes (mm/min)
