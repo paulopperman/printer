@@ -47,7 +47,7 @@ M574 Y2 S1 P"!3.io2.in"           ; configure switch-type (e.g. microswitch) end
 
 ; Z-Probe
 M558 P8 C"^3.io0.in" H5 F400:120 T18000 ; set Z probe type to switch and the dive height + speeds
-G31 P500 X-60 Y45 Z2.242               	; set Z probe trigger value, offset and trigger height (measured as 2.242)
+G31 P500 X-60 Y45 Z-0.70               	; set Z probe trigger value, offset and trigger height (measured as 2.242)
 M557 X80:2040 Y20:860 P5:5       		; define mesh grid
 
 ; Heaters
