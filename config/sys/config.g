@@ -13,10 +13,10 @@ M669 K1                        ; select CoreXY mode
 ; Drives
 
 M569 P0.0 S1                     ; physical drive 0.0 goes forwards ; Z1
-M569 P0.1 S1                     ; physical drive 0.1 goes forwards ; Z2
+;M569 P0.1 S1                     ; physical drive 0.1 goes forwards ; Z2
 M569 P0.2 S1                     ; physical drive 0.2 goes forwards ; Z3
 M569 P0.3 S1                     ; physical drive 0.3 goes forwards ; Z4
-M569 P0.4 S1                     ; physical drive 0.4 goes forwards ; Z5
+;M569 P0.4 S1                     ; physical drive 0.4 goes forwards ; Z5
 M569 P0.5 S1                     ; physical drive 0.5 goes forwards ; Z6
 
 M569 P3.0 S0                     ; physical drive 3.0 goes backwards ; X motor ; Backwards to calibrate direction
@@ -24,8 +24,13 @@ M569 P3.1 S0                     ; physical drive 3.1 goes backwards ; Y motor ;
 
 M569 P3.2 S1					 ; physical drive 3.2 goes forwards ; E0
 
-M584 X3.0 Y3.1 Z0.0:0.1:0.2:0.3:0.4:0.5 E3.2        ; set drive mapping
+;M584 X3.0 Y3.1 Z0.0:0.1:0.2:0.3:0.4:0.5 E3.2        ; set drive mapping
+M584 X3.0 Y3.1 Z0.0:0.2:0.3:0.5 E3.2  ; remove center z motors
 ;M671 X-15:100:215 Y190:-10:190 S0.5 ; define leadscrew positioning, testing with 6 motors (not documented)
+;M671 X2241:-133.3:-123.9:2217 Y-179.3:-213.9:1128.4:1121.7 S3; measured motor locs
+
+;Remeasured motor locations
+M671 X2157:-173:-173:2157 Y-144.7:-144.7:1123.3:1123.3 S3
 
 M350 X16 Y16 Z16 E16 I1                             ; configure microstepping with interpolation
 M92 X33.33 Y33.33 Z640.00 E837.00                   ; set steps per mm
@@ -37,17 +42,18 @@ M906 X3500 Y3500 Z1000  E800 ;I30                 	; set motor currents (mA) and
 M84 S0                                              ; Disable motor idle current reduction
 
 ; Axis Limits
-M208 X0 Y25 Z0 S1               ; set axis minima
-M208 X2040 Y960 Z900 S0        ; set axis maxima
+M208 X0 Y75 Z0 S1               ; set axis minima
+M208 X2033 Y985 Z857 S0        ; set axis maxima
 
 ; Endstops
 M574 X1 S1 P"!3.io1.in"           ; configure switch-type (e.g. microswitch) endstop for low end on X via pin 3.io1.in
 M574 Y2 S1 P"!3.io2.in"           ; configure switch-type (e.g. microswitch) endstop for high end on Y via pin 3.io2.in
-;M574 Z1 S1 P"!io1.in"             ; configure switch-type (e.g. microswitch) endstop for low end on Z via pin io1.in active-low
+M574 Z2 S1 P"!io7.in+!io8.in+!io2.in+!io6.in"             ; configure switch-type (e.g. microswitch) endstop for hi end on Z via pin io1.in active-low
+;M574 Z2 S1 P"!io2.in"
 
 ; Z-Probe
 M558 P8 C"^3.io0.in" H5 F400:120 T18000 ; set Z probe type to switch and the dive height + speeds
-G31 P500 X-60 Y45 Z-0.70               	; set Z probe trigger value, offset and trigger height (measured as 2.242)
+G31 P500 X0 Y0 Z0               	; set Z probe trigger value, offset and trigger height (measured as 2.242)
 M557 X80:2040 Y20:860 P5:5       		; define mesh grid
 
 ; Heaters
